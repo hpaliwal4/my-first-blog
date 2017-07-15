@@ -25,7 +25,7 @@ SECRET_KEY = '0ucin4na=bo9g5okcgsi76nvt1@_6i#)k)qhugznlj7u8p2=(e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['curiouscoder.pythonanywhere.com']
 
 
 # Application definition
