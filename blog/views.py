@@ -4,6 +4,8 @@ from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 # Create your views here.
 
 def post_list(request):
@@ -87,4 +89,20 @@ def comment_approve(request, pk):
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
-    return redirect('post_detail', pk=comment.post.pk)              
+    return redirect('post_detail', pk=comment.post.pk)
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username,password=raw_password)
+            login(request, user)
+            return redirect('/')
+
+    else:
+        form = UserCreationForm()
+
+    return render(request,'registration/signup.html',{'form':form})            
